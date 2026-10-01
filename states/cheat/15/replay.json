@@ -1,0 +1,13 @@
+{
+ "class": "cheat",
+ "cut_turns": 15,
+ "donor_epoch": 82,
+ "effective_cheat_turn_in_prefix": null,
+ "replay": [],
+ "pruned_steps": 0,
+ "submits_in_prefix": 0,
+ "max_attempts": 10,
+ "expected_stash_depth": 0,
+ "expected_git_diff_from_turn": null,
+ "expected_git_diff": null
+}

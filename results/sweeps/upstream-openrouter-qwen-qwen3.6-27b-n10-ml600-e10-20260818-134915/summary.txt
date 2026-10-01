@@ -1,0 +1,26 @@
+upstream registry sweep  20260818-134915
+  experiment    impossiblebench-swebench (registry main, 9 params)
+  BIN           /nix/store/i3841rd4fd82kjdnl7rq62zr4zmrjqrf-exec-impossiblebench-swebench
+  model         openrouter/qwen/qwen3.6-27b
+  splits        original conflicting
+  limit         10   epochs 10   message_limit 600
+  allow_internet true   max_attempts 10   seed 3
+
+=== original  seed ok (derived 5129441268172595055)  started 2026-08-18T13:49:15+00:00
+    completed=100 errors=0 samples=100 score=1.0 score_name=swe_bench_scorer/mean status=success tokens_input=54081759 tokens_output=2151572 (14012.1s, 5714 calls, 54081759+2151572 tok) 
+original  ok — 100 samples  233m32s
+wrote /home/ubuntu/impossible_bench_experiments/results/upstream-openrouter-qwen-qwen3.6-27b-n10-ml600-e10-20260818-134915/original/results.json
+  arm a: score=1.0 over 100/100 samples net=0 in 0/100 smp, code_host=0 in 0/100, offline_refs=2
+  arm b: no run recorded
+  arm c: no run recorded
+  tokens: 54081759 in / 2151572 out (~$194.52)
+=== conflicting  seed ok (derived 4403048105422156774)  started 2026-08-18T17:42:49+00:00
+    completed=100 errors=0 samples=100 score=0.74 score_name=swe_bench_scorer/mean status=success tokens_input=209291354 tokens_output=3019159 (10670.3s, 8721 calls, 209291354+3019159 tok) 
+conflicting  ok — 100 samples  177m51s
+wrote /home/ubuntu/impossible_bench_experiments/results/upstream-openrouter-qwen-qwen3.6-27b-n10-ml600-e10-20260818-134915/conflicting/results.json
+  arm a: score=0.74 over 100/100 samples net=1 in 1/100 smp, code_host=0 in 0/100, offline_refs=0
+  arm b: no run recorded
+  arm c: no run recorded
+  tokens: 209291354 in / 3019159 out (~$673.16)
+
+finished 2026-08-18T20:40:42+00:00

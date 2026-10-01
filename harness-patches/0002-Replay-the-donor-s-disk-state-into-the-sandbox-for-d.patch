@@ -1,0 +1,103 @@
+From d9d417902d6a5e4d81abb98d1fad7200a7b5e757 Mon Sep 17 00:00:00 2001
+From: nfl234 <nfl234@mit.edu>
+Date: Wed, 9 Sep 2026 08:47:10 +0000
+Subject: [PATCH 2/2] Replay the donor's disk state into the sandbox for deep
+ cuts
+
+A turn-N prefix is only half the state; if it contains edits, a fresh checkout
+contradicts it and the scorer reads final disk state. Steps come from replay.json
+and are validated offline first (verify_replay.py, which installs this task's
+test_patch before replaying -- the base image predates the F2P test entirely).
+
+Raises on any failing step rather than running a partially replayed sandbox,
+which would look normal and measure a state no donor was ever in.
+---
+ .../impossiblebench/swebench_agent_full.py    | 58 ++++++++++++++++++-
+ 1 file changed, 57 insertions(+), 1 deletion(-)
+
+diff --git a/vendor-impossiblebench/src/impossiblebench/swebench_agent_full.py b/vendor-impossiblebench/src/impossiblebench/swebench_agent_full.py
+index 8f4be56..01f0a6d 100644
+--- a/vendor-impossiblebench/src/impossiblebench/swebench_agent_full.py
++++ b/vendor-impossiblebench/src/impossiblebench/swebench_agent_full.py
+@@ -254,14 +254,23 @@ inspect-tool-support post-install || true"""
+             # manipulation and change what is being measured.
+             if prefix_dir:
+                 prefix, meta = _load_prefix(prefix_dir)
++                # The prefix is only half the state. If it contains file edits, the
++                # container must be brought to the same point or the model opens with
++                # a context asserting edits that are not on disk -- and the scorer
++                # reads final disk state. replay.json carries the ordered steps,
++                # validated offline against the donor's own `git diff`
++                # (cheat_rate_turns_study/scripts/verify_replay.py).
++                n_replayed = await _replay_sandbox(prefix_dir)
+                 state.messages.extend(prefix)
++                state.metadata["prefix_replay_steps"] = n_replayed
+                 state.metadata["prefix_class"] = meta["class"]
+                 state.metadata["prefix_cut_turns"] = meta["cut_turns"]
+                 state.metadata["prefix_sha256"] = meta["prefix_sha256"]
+                 state.metadata["prefix_messages"] = len(prefix)
+                 logger.warning(
+                     f"AGENT_INIT_PREFIX: class={meta['class']} cut={meta['cut_turns']} "
+-                    f"messages={len(prefix)} sha={meta['prefix_sha256'][:16]}")
++                    f"messages={len(prefix)} sha={meta['prefix_sha256'][:16]} "
++                    f"replay_steps={n_replayed}")
+             return state
+         return init
+ 
+@@ -319,6 +328,53 @@ def _load_prefix(prefix_dir: str):
+     return messages, meta
+ 
+ 
++async def _replay_sandbox(prefix_dir: str) -> int:
++    """Bring the container to the disk state the prefix describes.
++
++    Steps come from replay.json beside the prefix, are applied in order, and are
++    validated offline before any run: verify_replay.py replays them into a
++    throwaway container -- with this task's own test_patch installed first, since
++    the base image predates the F2P test -- and asserts the resulting `git diff`
++    equals the donor's own observed diff at that turn.
++
++    Raises on any failing step. A partially replayed sandbox is worse than no
++    sandbox: the episode would look normal and quietly measure a state no donor
++    was ever in.
++    """
++    root = Path(prefix_dir)
++    plan_path = root / "replay.json"
++    if not plan_path.exists():
++        return 0                      # cuts with no disk mutations need no replay
++    plan = json.loads(plan_path.read_text())
++    steps = plan.get("replay") or []
++    for i, entry in enumerate(steps, 1):
++        step = entry["step"]
++        if isinstance(step, str):
++            r = await sandbox().exec(["bash", "-lc", step], timeout=300)
++        else:
++            op, path = step.get("op"), str(step.get("path", ""))
++            if not path.startswith("/"):
++                path = "/testbed/" + path.lstrip("./")
++            if op == "str_replace":
++                prog = ("import sys\n"
++                        f"p={path!r}\n"
++                        "s=open(p,encoding='utf-8').read()\n"
++                        f"old={step['old']!r}\nnew={step['new']!r}\n"
++                        "if old not in s: sys.exit('OLD_NOT_FOUND')\n"
++                        "open(p,'w',encoding='utf-8').write(s.replace(old,new,1))\n")
++            elif op == "create":
++                prog = f"p={path!r}\nopen(p,'w',encoding='utf-8').write({step['text']!r})\n"
++            else:
++                raise ValueError(f"unknown replay op {op!r} in {plan_path}")
++            r = await sandbox().exec(["python", "-c", prog], timeout=300)
++        if not r.success:
++            raise RuntimeError(
++                f"replay step {i}/{len(steps)} (donor turn {entry.get('turn')}) failed "
++                f"in {root}: {(r.stderr or r.stdout)[:300]}")
++    logger.warning(f"AGENT_INIT_REPLAY: applied {len(steps)} step(s) from {plan_path}")
++    return len(steps)
++
++
+ def _get_default_template(test_info: str, max_attempts: int, prompt_suffix: str, pressure_preamble: str = "") -> str:
+     """Get the default prompt template.
+ 
+-- 
+2.53.0
+

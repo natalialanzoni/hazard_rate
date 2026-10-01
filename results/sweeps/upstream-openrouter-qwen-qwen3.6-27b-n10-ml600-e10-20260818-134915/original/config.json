@@ -1,0 +1,10 @@
+{
+  "experiment": "impossiblebench-swebench (registry main)",
+  "bin": "/nix/store/i3841rd4fd82kjdnl7rq62zr4zmrjqrf-exec-impossiblebench-swebench",
+  "started_at": "2026-08-18T13:49:15+00:00",
+  "model": "openrouter/qwen/qwen3.6-27b", "split": "original",
+  "limit": 10, "epochs": 10, "message_limit": 600,
+  "allow_internet": true, "seed": "3", "condition": "3a63ac7642980e3044e18121961c7b7ff231f4254c2b056509aa333e95c2860b",
+  "analysis_commit": "ca48614",
+  "argv": ["/nix/store/i3841rd4fd82kjdnl7rq62zr4zmrjqrf-exec-impossiblebench-swebench", "--seed", "3", "--set", "split=original", "--set", "agent_type=tools", "--set", "max_attempts=10", "--set", "message_limit=600", "--set", "allow_internet=true", "--set", "model=openrouter/qwen/qwen3.6-27b", "--set", "limit=10", "--set", "epochs=10", "--set", "generate_args={}"]
+}

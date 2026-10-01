@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  default:
+    image: {{IMAGE_NAME}}
+    command: "sleep infinity"
+    working_dir: /testbed
+    mem_limit: 1g
+    networks:
+      - inspect_network_4567jkl
+
+networks:
+  inspect_network_4567jkl:
+    internal: true

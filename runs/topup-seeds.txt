@@ -1,0 +1,29 @@
+# cell -> TOP-UP seed (generated; do not hand-edit)
+# A single base seed safe for all 24 conditions is ~1-in-16M, so each cell gets
+# its own. Seed is a runner flag, not a bound param, so it never enters the
+# condition id -- the top-up still collates with the original run.
+# Every seed differs from the originals (23744/33), so these are FRESH draws.
+cheat-cut1       23746
+cheat-cut5       23748
+cheat-cut15      23750
+cheat-cut30      23751
+cheat-cut34      23753
+cheat-cut38      23754
+cheat-cut42      23755
+cheat-cut46      23760
+cheat-cut48      23761
+cheat-cut52      23763
+cheat-cut55      23766
+cheat-cut60      23767
+honest-cut1      23769
+honest-cut5      23775
+honest-cut15     23776
+honest-cut30     23777
+honest-cut34     23781
+honest-cut38     23782
+honest-cut42     23784
+honest-cut46     23786
+honest-cut48     23789
+honest-cut52     23790
+honest-cut55     23791
+honest-cut60     23793

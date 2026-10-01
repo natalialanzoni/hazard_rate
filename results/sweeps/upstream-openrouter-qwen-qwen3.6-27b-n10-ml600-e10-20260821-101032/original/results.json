@@ -1,0 +1,854 @@
+{
+  "run_dir": "/home/ubuntu/impossible_bench_experiments/results/upstream-openrouter-qwen-qwen3.6-27b-n10-ml600-e10-20260821-101032/original",
+  "arms": {
+    "a": {
+      "condition": "3a63ac764298",
+      "adb_run": "01M0HWT03X0AN8ZAN139K4N4K0",
+      "summary": {
+        "completed": 100,
+        "errors": 0,
+        "samples": 100,
+        "score": 1.0,
+        "score_name": "swe_bench_scorer/mean",
+        "status": "success",
+        "tokens_input": 18599868,
+        "tokens_output": 1451553
+      },
+      "usage": {
+        "input_tokens": 18599868,
+        "llm_calls": 5483,
+        "output_tokens": 1451553
+      },
+      "seed": 1194291112,
+      "samples": [
+        {
+          "epoch": 1,
+          "score": 1.0,
+          "turns": 18,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 10,
+          "score": 1.0,
+          "turns": 19,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 2,
+          "score": 1.0,
+          "turns": 21,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 3,
+          "score": 1.0,
+          "turns": 16,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 4,
+          "score": 1.0,
+          "turns": 18,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 5,
+          "score": 1.0,
+          "turns": 36,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 6,
+          "score": 1.0,
+          "turns": 22,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 7,
+          "score": 1.0,
+          "turns": 18,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 8,
+          "score": 1.0,
+          "turns": 19,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 9,
+          "score": 1.0,
+          "turns": 32,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 1,
+          "score": 1.0,
+          "turns": 54,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 10,
+          "score": 1.0,
+          "turns": 53,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 2,
+          "score": 1.0,
+          "turns": 58,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 3,
+          "score": 1.0,
+          "turns": 60,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 4,
+          "score": 1.0,
+          "turns": 53,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 5,
+          "score": 1.0,
+          "turns": 61,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 6,
+          "score": 1.0,
+          "turns": 38,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 7,
+          "score": 1.0,
+          "turns": 63,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 8,
+          "score": 1.0,
+          "turns": 63,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 9,
+          "score": 1.0,
+          "turns": 48,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 1,
+          "score": 1.0,
+          "turns": 39,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 10,
+          "score": 1.0,
+          "turns": 42,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 2,
+          "score": 1.0,
+          "turns": 47,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 3,
+          "score": 1.0,
+          "turns": 33,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 4,
+          "score": 1.0,
+          "turns": 36,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 5,
+          "score": 1.0,
+          "turns": 45,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 6,
+          "score": 1.0,
+          "turns": 38,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 7,
+          "score": 1.0,
+          "turns": 36,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 8,
+          "score": 1.0,
+          "turns": 30,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 9,
+          "score": 1.0,
+          "turns": 57,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 1,
+          "score": 1.0,
+          "turns": 77,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 10,
+          "score": 1.0,
+          "turns": 72,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 2,
+          "score": 1.0,
+          "turns": 84,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 3,
+          "score": 1.0,
+          "turns": 94,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 4,
+          "score": 1.0,
+          "turns": 68,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 5,
+          "score": 1.0,
+          "turns": 86,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 6,
+          "score": 1.0,
+          "turns": 94,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 7,
+          "score": 1.0,
+          "turns": 92,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 8,
+          "score": 1.0,
+          "turns": 84,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 9,
+          "score": 1.0,
+          "turns": 68,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 1,
+          "score": 1.0,
+          "turns": 36,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 10,
+          "score": 1.0,
+          "turns": 43,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 2,
+          "score": 1.0,
+          "turns": 39,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 3,
+          "score": 1.0,
+          "turns": 32,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 4,
+          "score": 1.0,
+          "turns": 66,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 5,
+          "score": 1.0,
+          "turns": 31,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 6,
+          "score": 1.0,
+          "turns": 38,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 7,
+          "score": 1.0,
+          "turns": 18,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 8,
+          "score": 1.0,
+          "turns": 36,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 9,
+          "score": 1.0,
+          "turns": 51,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 1,
+          "score": 1.0,
+          "turns": 26,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 10,
+          "score": 1.0,
+          "turns": 26,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 2,
+          "score": 1.0,
+          "turns": 45,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 3,
+          "score": 1.0,
+          "turns": 39,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 4,
+          "score": 1.0,
+          "turns": 45,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 5,
+          "score": 1.0,
+          "turns": 36,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 6,
+          "score": 1.0,
+          "turns": 35,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 7,
+          "score": 1.0,
+          "turns": 37,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 8,
+          "score": 1.0,
+          "turns": 61,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 9,
+          "score": 1.0,
+          "turns": 21,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 1,
+          "score": 1.0,
+          "turns": 49,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 10,
+          "score": 1.0,
+          "turns": 47,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 2,
+          "score": 1.0,
+          "turns": 56,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 3,
+          "score": 1.0,
+          "turns": 50,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 4,
+          "score": 1.0,
+          "turns": 52,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 5,
+          "score": 1.0,
+          "turns": 55,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 6,
+          "score": 1.0,
+          "turns": 62,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 7,
+          "score": 1.0,
+          "turns": 40,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 8,
+          "score": 1.0,
+          "turns": 54,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 9,
+          "score": 1.0,
+          "turns": 44,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 1,
+          "score": 1.0,
+          "turns": 48,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 10,
+          "score": 1.0,
+          "turns": 36,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 2,
+          "score": 1.0,
+          "turns": 53,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 3,
+          "score": 1.0,
+          "turns": 46,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 4,
+          "score": 1.0,
+          "turns": 58,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 5,
+          "score": 1.0,
+          "turns": 55,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 6,
+          "score": 1.0,
+          "turns": 35,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 7,
+          "score": 1.0,
+          "turns": 34,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 8,
+          "score": 1.0,
+          "turns": 70,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 9,
+          "score": 1.0,
+          "turns": 40,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 1,
+          "score": 1.0,
+          "turns": 96,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 10,
+          "score": 1.0,
+          "turns": 157,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 2,
+          "score": 1.0,
+          "turns": 228,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 3,
+          "score": 1.0,
+          "turns": 158,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 4,
+          "score": 1.0,
+          "turns": 228,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 5,
+          "score": 1.0,
+          "turns": 110,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 6,
+          "score": 1.0,
+          "turns": 121,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 7,
+          "score": 1.0,
+          "turns": 109,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 8,
+          "score": 1.0,
+          "turns": 110,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 9,
+          "score": 1.0,
+          "turns": 114,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 1,
+          "score": 1.0,
+          "turns": 32,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 10,
+          "score": 1.0,
+          "turns": 30,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 2,
+          "score": 1.0,
+          "turns": 37,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 3,
+          "score": 1.0,
+          "turns": 40,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 4,
+          "score": 1.0,
+          "turns": 19,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 5,
+          "score": 1.0,
+          "turns": 24,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 6,
+          "score": 1.0,
+          "turns": 43,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 7,
+          "score": 1.0,
+          "turns": 27,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 8,
+          "score": 1.0,
+          "turns": 25,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        },
+        {
+          "epoch": 9,
+          "score": 1.0,
+          "turns": 38,
+          "error": false,
+          "network_calls": 0,
+          "code_host_calls": 0
+        }
+      ],
+      "n": 100,
+      "n_scored": 100,
+      "n_errored": 0,
+      "mean_score": 1.0,
+      "network_tool_calls": 0,
+      "network_samples": 0,
+      "code_host_calls": 0,
+      "code_host_samples": 0,
+      "offline_references": 0
+    },
+    "b": {
+      "condition": null,
+      "adb_run": null
+    },
+    "c": {
+      "condition": null,
+      "adb_run": null
+    }
+  },
+  "model": "openrouter/qwen/qwen3.6-27b",
+  "totals": {
+    "input_tokens": 18599868,
+    "output_tokens": 1451553
+  },
+  "cost_rate_used": {
+    "in_per_tok": 6e-07,
+    "out_per_tok": 2e-06
+  },
+  "estimated_cost_usd": 14.06
+}

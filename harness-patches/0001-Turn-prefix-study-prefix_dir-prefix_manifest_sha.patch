@@ -1,0 +1,157 @@
+From 9eed19444cce255ae2dadfcf7593ec7403d76f9d Mon Sep 17 00:00:00 2001
+From: nfl234 <nfl234@mit.edu>
+Date: Sun, 6 Sep 2026 17:20:22 +0000
+Subject: [PATCH 1/2] Turn-prefix study: prefix_dir + prefix_manifest_sha
+
+Appends the first N turns of a completed rollout of the SAME instance after the
+task's user message, so the model resumes its own episode mid-flight. No bridge
+message: the donor solved this task, so the system prompt and issue text the
+episode just emitted are the ones the donor saw.
+---
+ package.nix                                   | 14 +++++
+ .../impossiblebench/swebench_agent_full.py    | 55 ++++++++++++++++++-
+ .../src/impossiblebench/swebench_tasks.py     |  2 +
+ 3 files changed, 70 insertions(+), 1 deletion(-)
+
+diff --git a/package.nix b/package.nix
+index 21c9671..8c8f782 100644
+--- a/package.nix
++++ b/package.nix
+@@ -248,6 +248,19 @@ in
+         group = "prompt";
+       };
+ 
++      prefix_dir = param str {
++        description = "Point-of-no-return study: path to a cell directory holding manifest.json + prefix.json — the first N turns of a completed rollout OF THIS SAME instance, appended after the task's user message so the model resumes mid-episode. Empty reproduces upstream byte-for-byte. NOTE the directory contents are NOT content-hashed into the condition id — pin prefix_manifest_sha alongside it.";
++        initial = "";
++        order = 14;
++        group = "prompt";
++      };
++      prefix_manifest_sha = param str {
++        description = "sha256 of the cell's prefix.json (manifest.prefix_sha256). Carries no behaviour; it exists so the condition id changes when the prefix changes, which prefix_dir (a bare path) would not catch.";
++        initial = "";
++        order = 15;
++        group = "prompt";
++      };
++
+       # -- sandbox
+       sandbox_config_template = param str {
+         description = "Path to a docker-compose template used verbatim for the sandbox ({{IMAGE_NAME}} is substituted). Supported upstream hook; the way to get real network isolation given the allow_internet bug. Empty = the task's generated compose file.";
+@@ -271,6 +284,7 @@ in
+          reset_tests: .reset_tests, hide_tests: .hide_tests,
+          custom_prompt: .custom_prompt,
+          pressure_preamble: .pressure_preamble, pressure_nudge: .pressure_nudge,
++         prefix_dir: (if .prefix_dir == "" then null else .prefix_dir end),
+          sandbox_config_template_file:
+            (if .sandbox_config_template == "" then null else .sandbox_config_template end)}'';
+   };
+diff --git a/vendor-impossiblebench/src/impossiblebench/swebench_agent_full.py b/vendor-impossiblebench/src/impossiblebench/swebench_agent_full.py
+index e3d1a83..8f4be56 100644
+--- a/vendor-impossiblebench/src/impossiblebench/swebench_agent_full.py
++++ b/vendor-impossiblebench/src/impossiblebench/swebench_agent_full.py
+@@ -12,6 +12,7 @@ Key features:
+ - Dummy modes for testing (oracle, nochange)
+ """
+ 
++import json
+ import logging
+ import re
+ from pathlib import Path
+@@ -34,7 +35,7 @@ logger = logging.getLogger(__name__)
+ # Revert all local changes with `git checkout main`.
+ 
+ 
+-def multi_submission_solver(max_attempts: int = 10, human_intervention: bool = False, hide_tests: bool = False, custom_prompt: str = "", dummy: str = None, pressure_preamble: str = "", pressure_nudge: str = "") -> Solver:
++def multi_submission_solver(max_attempts: int = 10, human_intervention: bool = False, hide_tests: bool = False, custom_prompt: str = "", dummy: str = None, pressure_preamble: str = "", pressure_nudge: str = "", prefix_dir: str = "") -> Solver:
+     """Full scaffold solver for SWE-bench tasks with multi-tool support.
+ 
+     This solver uses Inspect AI's tool calling framework (bash, python, text_editor,
+@@ -238,6 +239,29 @@ inspect-tool-support post-install || true"""
+             template = _get_default_template(test_info, max_attempts, prompt_suffix, pressure_preamble)
+             
+             state.messages.insert(0, ChatMessageSystem(content=template))
++
++            # ADB-TURNS: point-of-no-return study. Append the first N turns of a
++            # completed rollout OF THIS SAME INSTANCE, so the model resumes its own
++            # episode mid-flight rather than starting cold.
++            #
++            # Appended AFTER the task's user message, not spliced before it as in the
++            # cross-run transplant: the donor solved THIS task, so the system prompt and
++            # the issue text the episode just emitted are the very ones the donor saw.
++            # The prefix therefore starts at the donor's first assistant turn.
++            #
++            # There is deliberately NO bridge message. The transplant needs one because
++            # it pivots to a different task; here any seam would announce the
++            # manipulation and change what is being measured.
++            if prefix_dir:
++                prefix, meta = _load_prefix(prefix_dir)
++                state.messages.extend(prefix)
++                state.metadata["prefix_class"] = meta["class"]
++                state.metadata["prefix_cut_turns"] = meta["cut_turns"]
++                state.metadata["prefix_sha256"] = meta["prefix_sha256"]
++                state.metadata["prefix_messages"] = len(prefix)
++                logger.warning(
++                    f"AGENT_INIT_PREFIX: class={meta['class']} cut={meta['cut_turns']} "
++                    f"messages={len(prefix)} sha={meta['prefix_sha256'][:16]}")
+             return state
+         return init
+ 
+@@ -266,6 +290,35 @@ inspect-tool-support post-install || true"""
+     )
+ 
+ 
++def _load_prefix(prefix_dir: str):
++    """Load a turn-N prefix built by cheat_rate_turns_study/scripts/build_prefixes.py.
++
++    `prefix_dir` holds manifest.json + prefix.json. The prefix is a plain message
++    list -- attachments already resolved, no system or user message, ending on a
++    tool result so no tool_call is left unanswered.
++
++    Every epoch of a cell gets the SAME prefix: the donor is the fixed stimulus
++    here, and epoch-to-epoch variation is the model's own resampling. Raises
++    rather than running un-prefixed, which would land in the cell as a control
++    sample and silently pull it toward the 49% base rate.
++    """
++    from pydantic import TypeAdapter
++    from inspect_ai.model import ChatMessage
++
++    root = Path(prefix_dir)
++    meta = json.loads((root / "manifest.json").read_text())
++    raw = (root / "prefix.json").read_text()
++    import hashlib
++    got = hashlib.sha256(raw.encode()).hexdigest()
++    if got != meta["prefix_sha256"]:
++        raise ValueError(
++            f"prefix.json sha {got[:16]} != manifest {meta['prefix_sha256'][:16]} in {root}")
++    messages = TypeAdapter(list[ChatMessage]).validate_python(json.loads(raw))
++    if not messages:
++        raise ValueError(f"empty prefix in {root}")
++    return messages, meta
++
++
+ def _get_default_template(test_info: str, max_attempts: int, prompt_suffix: str, pressure_preamble: str = "") -> str:
+     """Get the default prompt template.
+ 
+diff --git a/vendor-impossiblebench/src/impossiblebench/swebench_tasks.py b/vendor-impossiblebench/src/impossiblebench/swebench_tasks.py
+index 5647e8a..de71a74 100644
+--- a/vendor-impossiblebench/src/impossiblebench/swebench_tasks.py
++++ b/vendor-impossiblebench/src/impossiblebench/swebench_tasks.py
+@@ -95,6 +95,7 @@ def impossible_swebench(
+     # ADB-PRESSURE: pressure framing as task params (recorded in task_args)
+     pressure_preamble: str = "",
+     pressure_nudge: str = "",
++    prefix_dir: str = "",
+     custom_id: str = "",
+     dummy: str | None = None,  # "oracle" or "nochange"
+     shuffle: bool = False,
+@@ -262,6 +263,7 @@ def impossible_swebench(
+                 dummy=dummy,
+                 pressure_preamble=pressure_preamble,
+                 pressure_nudge=pressure_nudge,
++                prefix_dir=prefix_dir,
+             )
+         else:
+             raise NotImplementedError(f"unrecognized agent_type: {agent_type}")
+-- 
+2.53.0
+

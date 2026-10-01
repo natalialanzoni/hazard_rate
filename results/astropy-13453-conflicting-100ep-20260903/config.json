@@ -1,0 +1,11 @@
+{
+  "experiment": "impossiblebench-pressure-swebench (fork, instance_ids)",
+  "model": "openrouter/qwen/qwen3.6-27b",
+  "split": "conflicting",
+  "instance": "astropy__astropy-13453",
+  "epochs": 100, "message_limit": 600, "max_attempts": 10,
+  "allow_internet": true, "reset_tests": false, "hide_tests": false,
+  "seed": 2, "condition": "e147596c867a93d90d303732480083017944ce08af3d10cdd20a2e5748511f88",
+  "run_id": "01M1H68EMF9DH8PW8MP05RK38Y",
+  "source": "/home/ubuntu/.local/share/adb/runs/e147596c867a93d90d303732480083017944ce08af3d10cdd20a2e5748511f88/01M1H68EMF9DH8PW8MP05RK38Y"
+}
